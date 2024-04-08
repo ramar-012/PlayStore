@@ -16,7 +16,15 @@ public class UserActions {
         } else {
             System.out.println("Search results: ");
             for(Application application: seacrhResults){
-                System.out.println(application);
+                //System.out.println(application);
+                //print all elements of application in order
+                System.out.println("Application ID: " + application.getAppId());
+                System.out.println("Application Name: " + application.getName());
+                System.out.println("Application Description: " + application.getDescription());
+                System.out.println("Release Date: " + application.getReleaseDate());
+                System.out.println("Version: " + application.getVersion());
+                System.out.println("Ratings: " + application.getRatings());
+                System.out.println("Genre: " + application.getGenre());
             }
         }
     }
@@ -32,7 +40,7 @@ public class UserActions {
         } else {
             System.out.println("Categories: ");
             for(Category category: categories){
-                System.out.println(category);
+                System.out.println(category.getName());
             }
         }
         System.out.println("Enter category name to view apps: ");
@@ -57,7 +65,14 @@ public class UserActions {
             System.out.println("No application found with the ID: " + app_id);
         } else {
             System.out.println("Application details: ");
-            System.out.println(application);
+            //System.out.println(application);
+            System.out.println("Application ID: " + application.getAppId());
+            System.out.println("Application Name: " + application.getName());
+            System.out.println("Application Description: " + application.getDescription());
+            System.out.println("Release Date: " + application.getReleaseDate());
+            System.out.println("Version: " + application.getVersion());
+            System.out.println("Ratings: " + application.getRatings());
+            System.out.println("Genre: " + application.getGenre());
         }
     }
 
