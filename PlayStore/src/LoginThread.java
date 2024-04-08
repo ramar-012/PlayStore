@@ -39,7 +39,7 @@ public class LoginThread extends Thread{
                 count ++;
             }
             if(count > 3){
-                System.out.println("You have exceeded the maximum number of attempts. Please try again later!");
+                System.out.println("You have exceeded the maximum number of attempts. Exiting the app!");
                 System.exit(0);
             }
         }
@@ -48,14 +48,5 @@ public class LoginThread extends Thread{
 
     public String getUserRole(){
         return userRole;
-    }
-
-    public static void handleLogout(Scanner scanner){
-        System.out.println("Are you sure you want to log out? (yes/no)");
-        String choice = scanner.nextLine().toLowerCase();
-        if(choice.equals("yes")){
-            System.out.println("Logged out successfully! \nThanks for using the App, " + username + "!");
-            System.exit(0);
-        }
     }
 }

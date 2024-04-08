@@ -1,3 +1,4 @@
+import controller.UserController;
 import exceptions.exceptions;
 import test.OwnerOperationsTest;
 import test.UserAuthenticationTest;
@@ -53,13 +54,13 @@ public class HandleUsers {
                     UserActions.ViewApplicationsByID(app_id);
                 } else if (userRole.equals("owner")) {
                     //Log out
-                    LoginThread.handleLogout(scanner);
+                    handleLogout(scanner);
                     break;
                 }
                 break;
             case 4:
                 //logout
-                LoginThread.handleLogout(scanner);
+                handleLogout(scanner);
                 break;
             default:
                 System.out.println("Invalid choice, Please try again!");
@@ -135,11 +136,36 @@ public class HandleUsers {
                 break;
             case 4:
                 System.out.println("Logging out...");
-                LoginThread.handleLogout(testScanner);
+                handleLogout(testScanner);
                 break;
             default:
                 System.out.println("Invalid choice, Please try again!");
                 break;
+        }
+    }
+
+    public static void handleLogout(Scanner scanner)
+    {
+        System.out.println("Are you sure you want to log out? (yes/no)");
+        String choice = scanner.nextLine().toLowerCase();
+        if(choice.equals("yes") || (choice.equals("y"))){
+            System.out.println("Logged out successfully!");
+            System.out.println("What would you like to do?\n1. Sign in again\n2. Exit the app\nEnter your choice:");
+            int signInChoice = Integer.parseInt(scanner.nextLine());
+            switch (signInChoice) {
+                case 1:
+                    //System.out.println("Signing In...");
+                    App.signIn();
+                case 2:
+                    System.out.println("Thanks for using the app!\nExiting the app...");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Exiting the app!");
+                    System.exit(0);
+            }
+        } else{
+            System.out.println("Logging out cancelled, owing to invalid choice!");
         }
     }
 }
