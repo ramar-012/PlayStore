@@ -11,15 +11,22 @@ public class OwnerActions {
     public static void addUser() throws exceptions.InvalidInputException {
         UserController userController = new UserController();
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter username: ");
-        String username = scanner.nextLine();
-        System.out.println("Enter password: ");
-        String password = scanner.nextLine();
-        System.out.println("Enter role: ");
-        String role = scanner.nextLine();
-        userController.registerUser(username, password, role);
-
+        while(true){
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter username: ");
+            String username = scanner.nextLine();
+            System.out.println("Enter password: ");
+            String password = scanner.nextLine();
+            System.out.println("Enter role: ");
+            String role = scanner.nextLine();
+            boolean ifCreated = userController.registerUser(username, password, role);
+            if (ifCreated) {
+                System.out.println("User created successfully!");
+                break;
+            } else {
+                System.out.println("User creation failed, Try again!");
+            }
+        }
     }
 
     //CRUD operations on application

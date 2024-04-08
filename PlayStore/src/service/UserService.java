@@ -11,10 +11,12 @@ public class UserService {
     }
 
     //register a new user
-    public void registerUser(String username, String password, String role){
+    public boolean registerUser(String username, String password, String role){
+        boolean ifCreated = false;
         int maxUserId = userDAO.getMaxUserId();
         User user = new User(maxUserId+1, username, password, role);
-        userDAO.createUser(user);
+        ifCreated = userDAO.createUser(user);
+        return ifCreated;
     }
 
     //Authenticate user login

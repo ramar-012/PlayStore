@@ -17,16 +17,15 @@ public class OwnerOperationsTest {
     public void testRegisterUser(){
         UserController userController = new UserController();
         //given
-        String username = "Samwise";
+        String username = "SamGamgee";
         String password = "Gamgee12";
         String role = "user";
         //when
-        try {
-            userController.registerUser(username, password, role);
+        if(userController.registerUser(username, password, role)){
+            //then
             System.out.println("Test passed!");
-        } catch (Exception e) {
-            //e.printStackTrace();
-            System.out.println("Test failed!" + e);
+        } else{
+            System.out.println("User registration failed!");
         }
     }
 

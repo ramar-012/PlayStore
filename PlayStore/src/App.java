@@ -22,24 +22,30 @@ public class App {
             case 1:
                 break;
             case 2:
-                //register user by taking input
-                System.out.println("Enter your name: ");
-                String name = scanner.nextLine();
                 while(true) {
-                    System.out.println("Enter your password: ");
-                    newPassword = scanner.nextLine();
-                    System.out.println("Re-enter your password: ");
-                    String rePassword = scanner.nextLine();
-                    if(newPassword.equals(rePassword)) {
-                        break;
+                    //register user by taking input
+                    System.out.println("Enter your name: ");
+                    String name = scanner.nextLine();
+                    while (true) {
+                        System.out.println("Enter your password: ");
+                        newPassword = scanner.nextLine();
+                        System.out.println("Re-enter your password: ");
+                        String rePassword = scanner.nextLine();
+                        if (newPassword.equals(rePassword)) {
+                            break;
+                        }
+                        System.out.println("Passwords do not match. Please try again.");
                     }
-                    System.out.println("Passwords do not match. Please try again.");
-                }
 
-                System.out.println("Enter your role: ");
-                String role = scanner.nextLine();
-                userController.registerUser(name, newPassword, role);
-                break;
+                    System.out.println("Enter your role: ");
+                    String role = scanner.nextLine();
+                    if (userController.registerUser(name, newPassword, role)) {
+                        System.out.println("User registered successfully!");
+                        break;
+                    } else {
+                        System.out.println("User registration failed. Try again!");
+                    }
+                } break;
             default:
                 System.out.println("Invalid choice. Exiting the app!");
                 System.exit(0);

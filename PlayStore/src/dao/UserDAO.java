@@ -50,7 +50,8 @@ public class UserDAO {
     }
 
     //Create a new user
-    public void createUser(User user) {
+    public boolean createUser(User user) {
+        boolean hasCreated = false;
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_SQL)) {
             preparedStatement.setString(1, user.getUsername());
@@ -62,11 +63,13 @@ public class UserDAO {
             else{
                 preparedStatement.executeUpdate();
                 System.out.println("User " + user.getUsername() + " has been created successfully!");
+                hasCreated = true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
 
         }
+        return hasCreated;
     }
 
     //get a user by ID

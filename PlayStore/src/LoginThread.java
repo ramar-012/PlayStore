@@ -35,7 +35,7 @@ public class LoginThread extends Thread{
             }
             else{
                 System.out.println("Invalid username or password. Please try again!");
-                System.out.println("Attempt " + count + " of 3");
+                System.out.println("Attempt(s) " + count + " of 3");
                 count ++;
             }
             if(count > 3){
