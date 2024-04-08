@@ -19,7 +19,7 @@ public class UserController {
     //register a new user
     public void registerUser(String username, String password, String role){
         userService.registerUser(username, password, role);
-        System.out.println("User registered successfully!");
+        //System.out.println("User registered successfully!");
     }
 
     //Authenticate user login

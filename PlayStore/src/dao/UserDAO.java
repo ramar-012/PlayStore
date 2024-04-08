@@ -56,7 +56,13 @@ public class UserDAO {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getRole());
-            preparedStatement.executeUpdate();
+            if(checkUserExist(user.getUsername())){
+                System.out.println("User already exists with the same username. Please try again with new credentials!.");
+            }
+            else{
+                preparedStatement.executeUpdate();
+                System.out.println("User " + user.getUsername() + " has been created successfully!");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
 
@@ -102,6 +108,7 @@ public class UserDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_SQL)) {
             preparedStatement.setInt(1, user_id);
             preparedStatement.executeUpdate();
+            System.out.println("User " + user_id + " has been deleted successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -140,5 +147,19 @@ public class UserDAO {
             return false;
         }
     }
+
+    //check if user already exist by name avoiding case-sensitive
+    public boolean checkUserExist(String username) {
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM User WHERE LOWER(username) = LOWER(?);")) {
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 }

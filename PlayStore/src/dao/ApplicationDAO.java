@@ -42,12 +42,16 @@ public class ApplicationDAO {
             preparedStatement.setString(4, application.getVersion());
             preparedStatement.setDouble(5, application.getRatings());
             preparedStatement.setString(6, application.getGenre());
-            preparedStatement.executeUpdate();
-            System.out.println("Application: " + application.getName() + " created successfully");
-            addGenreToCategory(application.getGenre());
+            if(checkAppExist(application.getName())){
+                System.out.println("Application already exists with the same name. Please try again with new application name!.");
+            }else{
+                preparedStatement.executeUpdate();
+                System.out.println("Application: " + application.getName() + " created successfully");
+                addGenreToCategory(application.getGenre());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Application: " + application.getName() + " creation failed");
+            System.out.println("Application: " + application.getName() + " creation failed due to" + e.getMessage() + " error!;");
         }
     }
 
@@ -118,8 +122,13 @@ public class ApplicationDAO {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_APPLICATION_SQL)) {
             preparedStatement.setInt(1, app_id);
-            preparedStatement.executeUpdate();
-            System.out.println("Application: " + app_id + " deleted successfully");
+            if(checkAppExistById(app_id)){
+                preparedStatement.executeUpdate();
+                System.out.println("Application with ID: " + app_id + " deleted successfully!");
+            } else{
+                System.out.println("Application with ID: " + app_id + " doesn't exist in the database. " +
+                        "Please try again with valid application ID.");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -186,6 +195,32 @@ public class ApplicationDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    //check if app already exist by name avoiding case-sensitive
+    public boolean checkAppExist(String name) {
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM application WHERE LOWER(name) = LOWER(?);")) {
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+
+    //check if an app already exist by its ID
+    public boolean checkAppExistById(int app_id) {
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM application WHERE app_id = ?;")) {
+            preparedStatement.setInt(1, app_id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
         }
     }
 }

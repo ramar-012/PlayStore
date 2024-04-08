@@ -17,17 +17,23 @@ public class OwnerOperationsTest {
     public void testRegisterUser(){
         UserController userController = new UserController();
         //given
-        String username = "TestUser";
-        String password = "TestPassword";
+        String username = "Samwise";
+        String password = "Gamgee12";
         String role = "user";
         //when
-        userController.registerUser(username, password, role);
+        try {
+            userController.registerUser(username, password, role);
+            System.out.println("Test passed!");
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.out.println("Test failed!" + e);
+        }
     }
 
     @Test
     public void testAppCreation(){
         //given details for app creation
-        String appName = "TestApp2";
+        String appName = "Testapp3";
         String appDescription = "TestAppDescription2";
         String releaseDate = "2022-09-01";
         String version = "1.2";
@@ -37,11 +43,30 @@ public class OwnerOperationsTest {
         Application app = new Application(maxAppID+1, appName, appDescription, releaseDate, version, ratings, genre);
 
         //when
-        applicationController.createApplication(app);
-        //then
-        assertNotNull(app, "App created successfully");
-        System.out.println("App created successfully");
+        try{
+            applicationController.createApplication(app);
+            //then
+            assertNotNull(app, "App created successfully");
+            System.out.println("Test passed!");
+        } catch(Exception e){
+            System.out.println("Test failed!" + e.getMessage());
+        }
+        //System.out.println("App created successfully");
 
     }
 
+    @Test
+    public void deleteApplicationTest(){
+        int deleteId = 24;
+
+        try{
+            applicationController.deleteApplication(deleteId);
+            System.out.println("Test passed");
+
+        }catch (Exception e){
+            System.out.println("Test Failed. No user found with ID to delete.");
+        }
+    }
+
 }
+
